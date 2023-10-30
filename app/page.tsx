@@ -1,6 +1,8 @@
-
 export default function Home() {
-  return (
-    <main>Hello NextJS</main>
-  )
+	return (
+		<>
+			<div className="text-slate-30">Hello NextJS</div>
+			<div className="text-yellow-800">Hello NextJS</div>
+		</>
+	);
 }
