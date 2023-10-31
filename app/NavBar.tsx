@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { SiPivotaltracker } from "react-icons/si";
+import classnames from 'classnames';
 
 const NavBar = () => {
    const currentPath = usePathname();
@@ -23,7 +24,11 @@ const NavBar = () => {
 			<ul className="flex space-x-6">
             { links.map(link =>
                <Link key={link.href}
-                  className={`${link.href === currentPath ? 'text-red-900' : 'text-zinc-500'}  hover:text-zinc-800 transition-color`}
+                  className={ classnames({
+                     'text-red-900' : link.href === currentPath,
+                     'text-zinc-500' : link.href !== currentPath,
+                     'hover:text-zinc-800 transition-color' : true
+                  })}
                   href={link.href}> {link.label} </Link> )}
                {/* <Link key={id} className="styles" href={link} */}
 			</ul>
