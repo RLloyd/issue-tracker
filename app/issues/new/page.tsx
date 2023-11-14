@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
 import { Button, TextArea, TextField } from "@radix-ui/themes";
-import { FaceIcon, ImageIcon, SunIcon } from "@radix-ui/react-icons";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 import Link from "next/link";
+import { FaceIcon, ImageIcon, SunIcon } from "@radix-ui/react-icons";
 import { SiPivotaltracker } from "react-icons/si";
 
 function MyComponent() {
@@ -26,7 +27,8 @@ const NewIssuePage = () => {
 				</TextField.Slot>
 				<TextField.Input placeholder="Title" />
 			</TextField.Root>
-			<TextArea className="border" placeholder="Description" />
+
+			<SimpleMDE className="border" placeholder="Description" />
 
 			<Button className="gdBtn-styl-1">
 				<SiPivotaltracker className="w-4 h-4" />
