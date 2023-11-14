@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { SiPivotaltracker } from "react-icons/si";
 import classnames from 'classnames';
+import { Theme } from "@radix-ui/themes";
 
 const NavBar = () => {
    const currentPath = usePathname();
@@ -15,7 +16,8 @@ const NavBar = () => {
       { label: "Issues", href: "/issues" },
    ]
 	return (
-		<nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center bg-fuchsia-50">
+         // {/* <nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center bg-fuchsia-50"> */}
+		<nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center">
 
          {/* Logo */}
          <Link href="/"><SiPivotaltracker className="w-8 h-8" /></Link>

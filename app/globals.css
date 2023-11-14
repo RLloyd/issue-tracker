@@ -25,3 +25,8 @@ body {
     )
     rgb(var(--background-start-rgb)); */
 }
+
+/* Custom styles */
+.gdBtn-styl-1 {
+   border: 1px solid green !important;
+}
