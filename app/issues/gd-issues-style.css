@@ -1,0 +1,43 @@
+/* .EasyMDEContainer {
+   .CodeMirror {
+      .CodeMirror-scroll {
+         min-height: auto;
+      }
+   }
+} */
+
+/* .gd-smde */
+/* gd-issues */
+
+/* SimpleMDE */
+/* .gd-issues.gd-smde */
+/* .EasyMDEContainer {
+   border: 1px solid purple;
+} */
+
+/* .EasyMDEContainer.CodeMirror.CodeMirror-scroll {
+   min-height: auto;
+} */
+
+/* .CodeMirror.cm-s-easymde.CodeMirror-wrap.CodeMirror-empty.CodeMirror-scroll {
+   position: absolute;
+   min-height: 150px;
+} */
+
+/* .CodeMirror-scroll {
+   position: absolute;
+   height: 250px;
+} */
+.gd-issues .gd-smde .EasyMDEContainer {
+   border: 1px solid purple;
+   /* border-radius: 999999px; */
+}
+
+.gd-issues .gd-smde .EasyMDEContainer .CodeMirror {
+   height: 150px;
+   /* height: 50%; */
+}
+
+.EasyMDEContainer .CodeMirror-scroll {
+   min-height: fit-content !important;
+}
