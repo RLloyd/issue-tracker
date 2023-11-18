@@ -1,18 +1,12 @@
 // Issues route file
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import prisma from "@/prisma/client";
-
-// for validating data using zod
-const createIssueSchema = z.object({
-   // only validating these fields. other fields have default values
-   title: z.string().min(1, "Title is required.").max(255),
-   description: z.string().min(1, "Description is required.")
-})
+import { createIssueSchema } from "../../validationSchemas";
 
 export async function POST(request: NextRequest) {
    const body = await request.json();
    const validation = createIssueSchema.safeParse(body);
+
    if(!validation.success)
       // return NextResponse.json(validation.error.errors, {status: 400 }) //400=bad data
       return NextResponse.json(validation.error.format(), {status: 400 }) //400=bad data

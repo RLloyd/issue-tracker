@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Callout, TextArea, TextField } from "@radix-ui/themes";
+import { Button, Callout, Text, TextArea, TextField } from "@radix-ui/themes";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import Link from "next/link";
@@ -11,7 +11,9 @@ import "./../gd-issues-style.css";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import { zodResolver } from "@hookform/resolvers/zod"
+import { createIssueSchema } from "@/app/validationSchemas";
+import { z } from "zod";
 
 // function MyComponent() {
 // 	return (
@@ -23,15 +25,20 @@ import { useState } from "react";
 // 	);
 // }
 
+/*-- Redundant after creating validationSchemas.ts based on this interface
 interface IssueForm {
    title: string,
    description: string
-}
+} --*/
+
+type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
    const router = useRouter();
-   const { register, control, handleSubmit } = useForm<IssueForm> ();
-      console.log("registered: ", register('title'));
+   const { register, control, handleSubmit, formState: {errors} } = useForm<IssueForm> ({
+      resolver: zodResolver(createIssueSchema) });
+      // console.log("registered: ", register('title'));
+
    const [error, setError] = useState ("");
       console.log("error:", error);
 
@@ -42,7 +49,7 @@ const NewIssuePage = () => {
             <Callout.Icon><InfoCircledIcon width="22" height="22" /></Callout.Icon>
             <Callout.Text>{error}</Callout.Text>
          </Callout.Root>)
-      }
+         }
          <form
             className="gd-issues space-y-3"
             onSubmit={handleSubmit( async(data) => {
@@ -51,7 +58,7 @@ const NewIssuePage = () => {
                   router.push("/issues");
                } catch (error) {
                   // console.log(error);
-                  setError("An unecpected error occured.");
+                  setError("An unecpected error occured.xxxx");
                }
             })}>
 
@@ -66,6 +73,9 @@ const NewIssuePage = () => {
                <TextField.Input placeholder="Title" {...register("title")}/>
             </TextField.Root>
 
+            {/* Title TextField error */}
+            {errors.title && <Text color="red" as="p">{errors.title.message}</Text>}
+
             {/* smde description */}
             <Controller
                name="description"
@@ -74,8 +84,14 @@ const NewIssuePage = () => {
                // render={({ field }) => <SimpleMDE className="gd-smde border min-h-[50%]" placeholder="Description" {...field} /> }
                />
 
+            {/* Description TextField error */}
+            { errors.description && <Text color="red" as="p">{errors.description.message}</Text>}
+
             {/* submit button */}
-            <Button className="gdBtn-styl-1">Submit New Issue</Button>
+            <Button className="gdBtn-styl-1">
+               <SiPivotaltracker className="w-4 h-4" />
+               Submit New Issue
+            </Button>
             {/* <Button className="gdBtn-styl-1">
                <SiPivotaltracker className="w-4 h-4" />
                <Link href="/issues/new">Submit New Issue</Link>
