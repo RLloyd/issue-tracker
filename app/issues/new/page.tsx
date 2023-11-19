@@ -14,6 +14,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createIssueSchema } from "@/app/validationSchemas";
 import { z } from "zod";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
 // function MyComponent() {
 // 	return (
@@ -74,7 +75,10 @@ const NewIssuePage = () => {
             </TextField.Root>
 
             {/* Title TextField error */}
-            {errors.title && <Text color="red" as="p">{errors.title.message}</Text>}
+
+            <ErrorMessage>
+               {errors.title?.message}
+            </ErrorMessage>
 
             {/* smde description */}
             <Controller
@@ -85,7 +89,9 @@ const NewIssuePage = () => {
                />
 
             {/* Description TextField error */}
-            { errors.description && <Text color="red" as="p">{errors.description.message}</Text>}
+            <ErrorMessage>
+               {errors.description?.message}
+            </ErrorMessage>
 
             {/* submit button */}
             <Button className="gdBtn-styl-1">
