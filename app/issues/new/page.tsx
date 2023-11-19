@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { createIssueSchema } from "@/app/validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import Spinner from "@/app/components/Spinner";
 
 // function MyComponent() {
 // 	return (
@@ -41,7 +42,9 @@ const NewIssuePage = () => {
       // console.log("registered: ", register('title'));
 
    const [error, setError] = useState ("");
-      console.log("error:", error);
+      // console.log("error:", error);
+
+   const [isSubmitting, setSubmitting] = useState(false);
 
 	return (
       <div className="max-w-xl">
@@ -55,10 +58,12 @@ const NewIssuePage = () => {
             className="gd-issues space-y-3"
             onSubmit={handleSubmit( async(data) => {
                try {
+                  setSubmitting(true);
                   await axios.post("/api/issues", data);
                   router.push("/issues");
                } catch (error) {
                   // console.log(error);
+                  setSubmitting(false);
                   setError("An unecpected error occured.xxxx");
                }
             })}>
@@ -94,9 +99,9 @@ const NewIssuePage = () => {
             </ErrorMessage>
 
             {/* submit button */}
-            <Button className="gdBtn-styl-1">
+            <Button className="gdBtn-styl-1" disabled={isSubmitting}>
                <SiPivotaltracker className="w-4 h-4" />
-               Submit New Issue
+               Submit New Issue {isSubmitting && <Spinner /> }
             </Button>
             {/* <Button className="gdBtn-styl-1">
                <SiPivotaltracker className="w-4 h-4" />
