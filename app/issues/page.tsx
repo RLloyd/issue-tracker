@@ -5,17 +5,23 @@ import prisma from "@/prisma/client";
 import { SiPivotaltracker } from "react-icons/si";
 import { HiPlusCircle } from "react-icons/hi";
 import IssueStatusBadge from '../components/IssueStatusBadge';
+import delay from "delay";
+import IssueAction from "./IssueAction";
 
 const IssuesPage = async () => {
    const issues = await prisma.issue.findMany(); //find all our issues
-	return (
+	await delay(2000);
+
+   return (
 		<div>
-         <div className="gdBtn-styl-1 mb-5">
+         {/* Move this code to its own component */}
+         {/* <div className="gdBtn-styl-1 mb-5">
             <Button>
                <HiPlusCircle className="w-5 h-5" />
                <Link href="/issues/new">New Issue </Link>
             </Button>
-         </div>
+         </div> */}
+         <IssueAction />
 
 
          {/* Table container from RadixUI */}
