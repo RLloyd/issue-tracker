@@ -28,5 +28,5 @@ body {
 
 /* Custom styles */
 .gdBtn-styl-1 {
-   border: 1px solid green !important;
+   border: 0px solid green;/* !important; */
 }
