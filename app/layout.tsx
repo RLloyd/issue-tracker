@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<body className={inter.variable}>
-            <Theme accentColor="lime" radius="full">
+            <Theme accentColor="lime" radius="medium">
 					<NavBar />
 					<main className="p-5">{children}</main>
                {/* Theme styling panel */}

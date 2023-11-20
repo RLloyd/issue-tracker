@@ -4,6 +4,7 @@ import Link  from 'next/link';
 import prisma from "@/prisma/client";
 import { SiPivotaltracker } from "react-icons/si";
 import { HiPlusCircle } from "react-icons/hi";
+import IssueStatusBadge from '../components/IssueStatusBadge';
 
 const IssuesPage = async () => {
    const issues = await prisma.issue.findMany(); //find all our issues
@@ -34,9 +35,9 @@ const IssuesPage = async () => {
                      <Table.Cell>
                         {issue.title}
                         {/* in mobile: show status in same column as title, but hidden on md */}
-                        <div className='block md:hidden'>{issue.status}</div>
+                        <div className='block md:hidden'><IssueStatusBadge status={issue.status} /></div>
                      </Table.Cell>
-                     <Table.Cell className="hidden md:table-cell">{issue.status}</Table.Cell>
+                     <Table.Cell className="hidden md:table-cell"><IssueStatusBadge status={issue.status} /></Table.Cell>
                      <Table.Cell className="hidden md:table-cell">{issue.createdAt.toDateString()}</Table.Cell>
                   </Table.Row>
                ))}
