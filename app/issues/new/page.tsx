@@ -46,6 +46,18 @@ const NewIssuePage = () => {
 
    const [isSubmitting, setSubmitting] = useState(false);
 
+   const onSubmit = handleSubmit( async(data) => {
+      try {
+         setSubmitting(true);
+         await axios.post("/api/issues", data);
+         router.push("/issues");
+      } catch (error) {
+         // console.log(error);
+         setSubmitting(false);
+         setError("An unecpected error occured.xxxx");
+      }
+   })
+
 	return (
       <div className="max-w-xl">
          {error && (
@@ -56,17 +68,7 @@ const NewIssuePage = () => {
          }
          <form
             className="gd-issues space-y-3"
-            onSubmit={handleSubmit( async(data) => {
-               try {
-                  setSubmitting(true);
-                  await axios.post("/api/issues", data);
-                  router.push("/issues");
-               } catch (error) {
-                  // console.log(error);
-                  setSubmitting(false);
-                  setError("An unecpected error occured.xxxx");
-               }
-            })}>
+            onSubmit={onSubmit}>
 
             <TextField.Root>
                {/* icon */}
