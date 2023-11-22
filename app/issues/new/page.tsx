@@ -1,23 +1,22 @@
 "use client";
 
-import { Button, Callout, Text, TextArea, TextField } from "@radix-ui/themes";
+import { Button, Callout, TextField } from "@radix-ui/themes";
 // import SimpleMDE from "react-simplemde-editor"; //instead of importing this here
-import dynamic from "next/dynamic"; //first import dynamic
-import "easymde/dist/easymde.min.css";
-import Link from "next/link";
-import { FaceIcon, ImageIcon, InfoCircledIcon, SunIcon } from "@radix-ui/react-icons";
-import { SiPivotaltracker } from "react-icons/si";
-import { useForm, Controller } from "react-hook-form";
-import "./../gd-issues-style.css";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { createIssueSchema } from "@/app/validationSchemas";
-import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
+import { createIssueSchema } from "@/app/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FaceIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import axios from "axios";
 import delay from "delay";
+import "easymde/dist/easymde.min.css";
+import dynamic from "next/dynamic"; //first import dynamic
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { SiPivotaltracker } from "react-icons/si";
+import { z } from "zod";
+import "./../gd-issues-style.css";
 
 // function MyComponent() {
 // 	return (

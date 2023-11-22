@@ -1,12 +1,7 @@
-import React from "react";
-import { Table } from "@radix-ui/themes";
-// import Link  from 'next/link';
-import Link from "../components/Link";
 import prisma from "@/prisma/client";
-import { SiPivotaltracker } from "react-icons/si";
-import { HiPlusCircle } from "react-icons/hi";
-import IssueStatusBadge from '../components/IssueStatusBadge';
+import { Table } from "@radix-ui/themes";
 import delay from "delay";
+import { Link, IssueStatusBadge } from "@/app/components";
 import IssueAction from "./IssueAction";
 
 const IssuesPage = async () => {

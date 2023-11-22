@@ -1,11 +1,8 @@
+import { Skeleton } from "@/app/components";
 import { Table } from "@radix-ui/themes";
-import React from "react";
-import IssueStatusBadge from "../components/IssueStatusBadge";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import IssueAction from "./IssueAction";
 
-const LoadingIssuePage = () => {
+const LoadingIssuesPage = () => {
 	const issues = [1, 2, 3, 4, 5]; //renders 5 rows of skeleton
 
 	return (
@@ -46,4 +43,4 @@ const LoadingIssuePage = () => {
 	);
 };
 
-export default LoadingIssuePage;
+export default LoadingIssuesPage;

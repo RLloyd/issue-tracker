@@ -1,9 +1,5 @@
-import Spinner from '@/app/components/Spinner'
-import { Box, Button } from '@radix-ui/themes'
-import React from 'react'
-import { SiPivotaltracker } from 'react-icons/si'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css';
+import { Box } from '@radix-ui/themes';
+import { Skeleton } from "@/app/components";
 
 const LoadingNewIssuePage = () => {
 
