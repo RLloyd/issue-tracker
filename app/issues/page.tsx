@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Table } from "@radix-ui/themes";
-import Link  from 'next/link';
+import { Table } from "@radix-ui/themes";
+// import Link  from 'next/link';
+import Link from "../components/Link";
 import prisma from "@/prisma/client";
 import { SiPivotaltracker } from "react-icons/si";
 import { HiPlusCircle } from "react-icons/hi";
@@ -37,8 +38,11 @@ const IssuesPage = async () => {
             {/* Table Body Section */}
             <Table.Body>
                {issues.map(issue => (
+
                   <Table.Row key={issue.id}>
+
                      <Table.Cell>
+                        {/* Styled Link */}
                         <Link href={`/issues/${issue.id}`}>
                            {issue.title}
                         </Link>
@@ -47,7 +51,9 @@ const IssuesPage = async () => {
                      </Table.Cell>
                      <Table.Cell className="hidden md:table-cell"><IssueStatusBadge status={issue.status} /></Table.Cell>
                      <Table.Cell className="hidden md:table-cell">{issue.createdAt.toDateString()}</Table.Cell>
+
                   </Table.Row>
+
                ))}
             </Table.Body>
          </Table.Root>
