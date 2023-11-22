@@ -57,7 +57,9 @@ const NewIssuePage = () => {
          setSubmitting(false);
          setError("An unecpected error occured.xxxx");
       }
-      // await delay(4000);
+
+      await delay(4000);
+
    })
 
 
