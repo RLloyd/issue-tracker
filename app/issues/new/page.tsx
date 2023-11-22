@@ -1,7 +1,8 @@
 "use client";
 
 import { Button, Callout, Text, TextArea, TextField } from "@radix-ui/themes";
-import SimpleMDE from "react-simplemde-editor";
+// import SimpleMDE from "react-simplemde-editor"; //instead of importing this here
+import dynamic from "next/dynamic"; //first import dynamic
 import "easymde/dist/easymde.min.css";
 import Link from "next/link";
 import { FaceIcon, ImageIcon, InfoCircledIcon, SunIcon } from "@radix-ui/react-icons";
@@ -33,6 +34,12 @@ interface IssueForm {
    title: string,
    description: string
 } --*/
+
+// use dynamic here to lazy load the smde component
+const SimpleMDE = dynamic (
+   () => import('react-simplemde-editor'),
+   {ssr: false}
+)
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
