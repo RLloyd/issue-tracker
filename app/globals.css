@@ -30,3 +30,15 @@ body {
 .gdBtn-styl-1 {
    border: 0px solid green;/* !important; */
 }
+
+.gd-test {
+   border: 1px solid green;
+}
+
+.gd-brdr-lt-grey {
+   border-color: rgb(183, 182, 182) !important;
+}
+
+.gd-brdr-red {
+   border-color: rgb(250, 11, 11) !important;
+}
