@@ -1,13 +1,12 @@
 "use client";
 
-import { Button, Callout, TextField } from "@radix-ui/themes";
-import dynamic from "next/dynamic"; //first import dynamic
-// import SimpleMDE from "react-simplemde-editor"; //instead of importing this here
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
 import { issueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Issue } from "@prisma/client";
 import { FaceIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { Button, Callout, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import delay from "delay";
 import "easymde/dist/easymde.min.css";
@@ -15,9 +14,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { SiPivotaltracker } from "react-icons/si";
+import SimpleMDE from "react-simplemde-editor"; //importing statically
 import { z } from "zod";
 import "./../gd-issues-style.css";
-import { Issue } from "@prisma/client";
 
 // function MyComponent() {
 // 	return (
@@ -36,7 +35,7 @@ interface IssueForm {
 } --*/
 
 // use dynamic here to lazy load the smde component
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), { ssr: false });
+// const SimpleMDE = dynamic(() => import("react-simplemde-editor"), { ssr: false });
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
@@ -84,7 +83,7 @@ const IssueForm = ({ issue }: Props) => {
 			setError("An unecpected error occured.xxxx");
 		}
 
-		// await delay(4000);
+		await delay(4000);
 	});
 
 	return (
