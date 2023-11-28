@@ -9,12 +9,12 @@ interface Props {
 
 const EditIssueButton = ({issueId}: Props) => { //using the interface
 // const EditIssueButton = ({issueId}: {issueId: number}) => { // simplifying the Props, interface not needed
-  return (
-   <Button>
-      <Pencil2Icon />
-      <Link href={`/issues/${issueId}/edit`}>Edit Issue</Link>
-</Button>
-  )
+   return (
+      <Button>
+         <Pencil2Icon />
+         <Link href={`/issues/${issueId}/edit`}>Edit Issue</Link>
+      </Button>
+   )
 }
 
 export default EditIssueButton

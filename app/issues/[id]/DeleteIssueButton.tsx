@@ -1,42 +1,75 @@
-'use client';
+"use client";
 
-import { AlertDialog, Button, Flex } from '@radix-ui/themes';
+import { AlertDialog, Button, Flex } from "@radix-ui/themes";
+import axios from "axios";
 import { GoTrash } from "react-icons/go";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface Props {
-   issueId: number;
+	issueId: number;
 }
 
-const DeleteIssueButton = ( {issueId}: Props ) => {
-  return (
-   <AlertDialog.Root>
+const DeleteIssueButton = ({ issueId }: Props) => {
+	const router = useRouter();
+	const [error, setError] = useState(false);
 
-      {/* Button trigger */}
-      <AlertDialog.Trigger>
-         <Button color='red'>
-            <GoTrash />Delete Issue
-         </Button>
-      </AlertDialog.Trigger>
+   const deleteIssue = async () => {
+      try {
+         // simulate an error: test only
+         // throw new Error();
 
-      {/* text inside content */}
-      <AlertDialog.Content>
-         <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
-         <AlertDialog.Description>Are you sure you want to delete this issue? This action cannot be undone.</AlertDialog.Description>
+         await axios.delete("/api/issues/" + issueId);
+         router.push("/issues");
+         router.refresh();
+      } catch (error) {
+         setError(true);
+      }
+   }
 
-         {/* Dialog buttons */}
-         <Flex mt="4" gap="3">
-            <AlertDialog.Cancel>
-               <Button variant='soft' color='gray'>Cancel</Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action>
-               <Button color='red'>Delete</Button>
-            </AlertDialog.Action>
-         </Flex>
+	return (
+		<>
+			<AlertDialog.Root>
+				{/* Button trigger */}
+				<AlertDialog.Trigger>
+					<Button color="purple">
+						<GoTrash />
+						Delete Issue
+					</Button>
+				</AlertDialog.Trigger>
 
-      </AlertDialog.Content>
+				{/* text inside content */}
+				<AlertDialog.Content>
+					<AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
+					<AlertDialog.Description>Are you sure you want to delete this issue? This action cannot be undone.</AlertDialog.Description>
 
-   </AlertDialog.Root>
-  )
-}
+					{/* Dialog buttons */}
+					<Flex mt="4" gap="3">
+						{/* Cancel button */}
+						<AlertDialog.Cancel>
+							<Button variant="soft" color="gray">
+								Cancel
+							</Button>
+						</AlertDialog.Cancel>
 
-export default DeleteIssueButton
+						{/* Delete Issue button */}
+						<AlertDialog.Action>
+							<Button color="red" onClick={deleteIssue}>Delete Issue</Button>
+						</AlertDialog.Action>
+					</Flex>
+				</AlertDialog.Content>
+			</AlertDialog.Root>
+
+			{/* second error dialog box */}
+			<AlertDialog.Root open={error}>
+            <AlertDialog.Content>
+               <AlertDialog.Title>Error</AlertDialog.Title>
+               <AlertDialog.Description>This issue could not be deleted.</AlertDialog.Description>
+               <Button color="gray" variant="soft" mt="2" onClick={() => setError(false)}>OK</Button>
+            </AlertDialog.Content>
+         </AlertDialog.Root>
+		</>
+	);
+};
+
+export default DeleteIssueButton;

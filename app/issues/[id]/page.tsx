@@ -1,5 +1,5 @@
 import prisma from '@/prisma/client';
-import { Box, Flex, Grid } from '@radix-ui/themes';
+import { Box, Flex, Grid, Heading } from '@radix-ui/themes';
 
 import delay from 'delay';
 import { notFound } from 'next/navigation';
@@ -19,35 +19,41 @@ const IssueForm = dynamic(
 );
 
 interface Props {
-   params: { id: string }
+   params: { id: string };
 }
 
-const IssueDetailPage = async ({ params }: Props) => {
+// const IssueDetailPage = async ({ params }: Props) => {
+const IssueDetailPage = async ( { params }: { params: { id: string } } ) => {
    const issue = await prisma.issue.findUnique({
-      where: { id: parseInt(params.id) }
+      where: {id: parseInt(params.id)}
    });
 
    // if no issue, load notFound function
-   if(!issue)
-      notFound();
+   if(!issue) notFound();
 
-   await delay(1000); //for testing only!
+   // await delay(1000); //for testing only!
 
    // otherwise
    return (
-      <Grid columns={{initial:"1", sm:"4"}} gap="5" className='gd-test gd-brdr-red'>
-         {/* Content */}
-         <Box className="md:col-span-3">
-            <IssueDetails issue={issue} />
-         </Box>
-         {/* Buttons */}
-         <Box className='gd-test gd-brdr-lt-grey'>
-            <Flex direction="column" gap="4">
-               <EditIssueButton issueId={issue.id} />
-               <DeleteIssueButton issueId={issue.id} />
-            </Flex>
-         </Box>
-      </Grid>
+      <>
+         <Heading as='h1'>Issue Details</Heading>
+         <Grid columns={{initial:"1", sm:"4"}} gap="5" className='gd-test gd-brdr-red'>
+
+            {/* Column1: Content */}
+            <Box className="md:col-span-3">
+               <IssueDetails issue={issue} />
+            </Box>
+
+            {/* Column2: Buttons(Edit & Delete) */}
+            <Box className='gd-test gd-brdr-lt-grey'>
+               <Flex direction="column" gap="4">
+                  <EditIssueButton issueId={issue.id} />
+                  <DeleteIssueButton issueId={issue.id} />
+               </Flex>
+            </Box>
+
+         </Grid>
+      </>
    )
 }
 

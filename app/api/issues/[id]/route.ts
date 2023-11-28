@@ -8,7 +8,9 @@ interface Props {
 }
 
 // export async function PATCH(request: NextRequest, { params: {params} }: Props){ //using the Props interface
-export async function PATCH(request: NextRequest, { params }: { params: { id: string }}) { //Props is a concept tie so much with with React. We'll use an inline annotations
+export async function PATCH(
+   request: NextRequest,
+   { params }: { params: { id: string }}) { //Props is a concept tie so much with with React. We'll use an inline annotations
 
    const body = await request.json(); //to read the body of the request
 
@@ -44,14 +46,21 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 
 /*-= Deleting an Issue =-*/
 // export async function DELETE(request: NextRequest, { params: {params} }: Props){ //using the Props interface
-export async function DELETE(request: NextRequest, { params }: { params: { id: string }}) {
+
+export async function DELETE(
+   request: NextRequest,
+   { params }: { params: { id: string }}) {
 
    const issue = await prisma.issue.findUnique({
+   // const issue = await prisma.issue.findFirst({
       where: { id: parseInt(params.id) }
    })
 
    if(!issue) //if there's no issue
-      return NextResponse.json({ error: "Invalid Issue"}, {status: 404})
+      return NextResponse.json(
+         { error: "Invalid Issue"},
+         { status: 404 }
+      );
 
    await prisma.issue.delete({ //if issue exist, delete
       where: { id: issue.id }
