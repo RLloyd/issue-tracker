@@ -5,6 +5,7 @@ import axios from "axios";
 import { GoTrash } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Spinner } from "@/app/components";
 
 interface Props {
 	issueId: number;
@@ -13,16 +14,20 @@ interface Props {
 const DeleteIssueButton = ({ issueId }: Props) => {
 	const router = useRouter();
 	const [error, setError] = useState(false);
+   const [isDeleting, setDeleting] = useState(false);
 
    const deleteIssue = async () => {
       try {
          // simulate an error: test only
          // throw new Error();
 
+         setDeleting(true);
+
          await axios.delete("/api/issues/" + issueId);
          router.push("/issues");
          router.refresh();
       } catch (error) {
+         setDeleting(false);
          setError(true);
       }
    }
@@ -32,9 +37,10 @@ const DeleteIssueButton = ({ issueId }: Props) => {
 			<AlertDialog.Root>
 				{/* Button trigger */}
 				<AlertDialog.Trigger>
-					<Button color="purple">
+					<Button color="purple" disabled={isDeleting}>
 						<GoTrash />
 						Delete Issue
+                  {isDeleting && <Spinner />}
 					</Button>
 				</AlertDialog.Trigger>
 
