@@ -1,7 +1,7 @@
 import prisma from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
 import delay from "delay";
-import { Link, IssueStatusBadge } from "@/app/components";
+import { Link, IssueStatusBadge } from "@/app/components"; //index.tsx
 import IssueAction from "./IssueAction";
 
 const IssuesPage = async () => {

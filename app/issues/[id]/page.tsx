@@ -36,7 +36,7 @@ const IssueDetailPage = async ( { params }: { params: { id: string } } ) => {
    // otherwise
    return (
       <>
-         <Heading as='h1'>Issue Details</Heading>
+         <Heading as='h1' color='teal'>Issue Details</Heading>
          <Grid columns={{initial:"1", sm:"4"}} gap="5" className='gd-test gd-brdr-red'>
 
             {/* Column1: Content */}
