@@ -6,7 +6,7 @@ import { SiPivotaltracker } from 'react-icons/si'
 const IssueFormSkeleton = () => {
   return (
    <Box className="max-w-xl space-y-3">
-      LOADING PAGE...
+      GENERIC LOADING PAGE...
       {/* title */}
       <Skeleton height="2rem"/>
       {/* smde description */}

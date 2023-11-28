@@ -10,7 +10,7 @@ var NavBar = function () {
     // console.log(currentPath);
     var links = [
         { label: "Dashboard", href: "/" },
-        { label: "Issues", href: "/issues" },
+        { label: "Issues", href: "/issues/list" },
     ];
     return (react_1["default"].createElement("nav", { className: "flex space-x-6 border-b mb-5 px-5 h-14 items-center bg-fuchsia-50" },
         react_1["default"].createElement(link_1["default"], { href: "/" },

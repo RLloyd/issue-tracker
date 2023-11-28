@@ -13,7 +13,7 @@ const NavBar = () => {
 
    const links = [
       { label: "Dashboard", href: "/" },
-      { label: "Issues List", href: "/issues" },
+      { label: "Issues List", href: "/issues/list" },
    ]
 	return (
       // Layout: RadixUI & Tailwind version

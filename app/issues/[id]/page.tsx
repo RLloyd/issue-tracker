@@ -31,7 +31,7 @@ const IssueDetailPage = async ( { params }: { params: { id: string } } ) => {
    // if no issue, load notFound function
    if(!issue) notFound();
 
-   // await delay(1000); //for testing only!
+   await delay(2000); //for testing only!
 
    // otherwise
    return (
@@ -45,7 +45,8 @@ const IssueDetailPage = async ( { params }: { params: { id: string } } ) => {
             </Box>
 
             {/* Column2: Buttons(Edit & Delete) */}
-            <Box className='gd-test gd-brdr-lt-grey'>
+            <Box display='block' className='gd-test gd-brdr-lt-grey'>
+               {/* <Flex direction="column" gap="4"> */}
                <Flex direction="column" gap="4">
                   <EditIssueButton issueId={issue.id} />
                   <DeleteIssueButton issueId={issue.id} />

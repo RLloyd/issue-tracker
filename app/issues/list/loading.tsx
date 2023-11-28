@@ -7,7 +7,7 @@ const LoadingIssuesPage = () => {
 
 	return (
 		<div>
-         LOADING ISSUES...
+         LOADING ALL ISSUES...
 			<IssueAction />
 			{/*--= Skeleton structure for app/issues/page.tsx only! =--*/}
 			<Table.Root variant="surface">
