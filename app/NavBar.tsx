@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { SiPivotaltracker } from "react-icons/si";
 import classnames from 'classnames';
-import { Box, Card, Flex, Grid, Theme } from "@radix-ui/themes";
+import { Box, Card, Container, Flex, Grid, Theme } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 
 const NavBar = () => {
@@ -18,39 +18,43 @@ const NavBar = () => {
       { label: "Issues List", href: "/issues/list" },
    ]
 	return (
-      // Layout: RadixUI & Tailwind version
-      // <Box className="flex space-x-6 border-b mb-5 px-5 h-14 items-center">
-      <Box height='9' className='gd-testX' >
-         <Flex gap='4' align='center' className="px-5 h-14 border-b gd-testX">
 
-            {/* Logo */}
-            <Link href="/"><SiPivotaltracker className="w-8 h-8" /></Link>
+      <nav className='gd-testX border-b mb-5 px-5 py-3' >
+         <Container>
+            <Flex justify="between" className="gd-testx">
+               <Flex align="center" gap="3" className="gd-testx">
 
-            {/* Menu List */}
-            <ul className="flex space-x-4 font-medium uppercase">
-               { links.map(link =>
-                  <li key={link.href}>
-                     <Link
-                        className={ classnames({
-                           'text-red-500' : link.href === currentPath,
-                           'text-zinc-500' : link.href !== currentPath,
-                           'hover:text-zinc-900 transition-color' : true
-                        })}
-                        href={link.href}>{link.label}
-                     </Link>
-                  </li>)}
-                  {/* <Link key={id} className="styles" href={link} */}
-            </ul>
+                  {/* Logo */}
+                  <Link href="/">
+                     <SiPivotaltracker className="w-8 h-8" />
+                  </Link>
 
-            {/* Login & Logout button: add dynamically */}
-            <Box>
-               {status === "authenticated" && ( <Link href="api/auth/signout">Log Out</Link>)}
-               {status === "unauthenticated" && ( <Link href="api/auth/signin">LogIn</Link>)}
-               {/* this will give Error: [next-auth]: `useSession` must be wrapped in a <SessionProvider /> */}
-            </Box>
+                  {/* Menu List */}
+                  <ul className="gd-testx flex space-x-4 font-medium uppercase">
+                     { links.map(link =>
+                        <li key={link.href}>
+                           <Link
+                              className={ classnames({
+                                 'text-red-500' : link.href === currentPath,
+                                 'text-zinc-500' : link.href !== currentPath,
+                                 'hover:text-zinc-900 transition-color' : true
+                              })}
+                              href={link.href}>{link.label}
+                           </Link>
+                        </li>)}
+                        {/* <Link key={id} className="styles" href={link} */}
+                  </ul>
 
-         </Flex>
-		</Box>
+               </Flex>
+               {/* Login & Logout button: add dynamically */}
+               <Flex align="center">
+                  {status === "authenticated" && ( <Link href="api/auth/signout">Log Out</Link>)}
+                  {status === "unauthenticated" && ( <Link href="api/auth/signin">LogIn</Link>)}
+                  {/* this will give Error: [next-auth]: `useSession` must be wrapped in a <SessionProvider /> */}
+               </Flex>
+            </Flex>
+         </Container>
+		</nav>
 
       // Original version
       // {/* <nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center bg-fuchsia-50"> */}
