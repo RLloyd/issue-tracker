@@ -6,10 +6,12 @@ import React from "react";
 import { SiPivotaltracker } from "react-icons/si";
 import classnames from 'classnames';
 import { Box, Card, Flex, Grid, Theme } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
 
 const NavBar = () => {
    const currentPath = usePathname();
    // console.log(currentPath);
+   const {status, data: session } = useSession();
 
    const links = [
       { label: "Dashboard", href: "/" },
@@ -27,15 +29,26 @@ const NavBar = () => {
             {/* Menu List */}
             <ul className="flex space-x-4 font-medium uppercase">
                { links.map(link =>
-                  <Link key={link.href}
-                  className={ classnames({
-                     'text-red-500' : link.href === currentPath,
-                     'text-zinc-500' : link.href !== currentPath,
-                     'hover:text-zinc-900 transition-color' : true
-                  })}
-                  href={link.href}> {link.label} </Link> )}
+                  <li key={link.href}>
+                     <Link
+                        className={ classnames({
+                           'text-red-500' : link.href === currentPath,
+                           'text-zinc-500' : link.href !== currentPath,
+                           'hover:text-zinc-900 transition-color' : true
+                        })}
+                        href={link.href}>{link.label}
+                     </Link>
+                  </li>)}
                   {/* <Link key={id} className="styles" href={link} */}
             </ul>
+
+            {/* Login & Logout button: add dynamically */}
+            <Box>
+               {status === "authenticated" && ( <Link href="api/auth/signout">Log Out</Link>)}
+               {status === "unauthenticated" && ( <Link href="api/auth/signin">LogIn</Link>)}
+               {/* this will give Error: [next-auth]: `useSession` must be wrapped in a <SessionProvider /> */}
+            </Box>
+
          </Flex>
 		</Box>
 
