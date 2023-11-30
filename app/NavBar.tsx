@@ -75,7 +75,6 @@ const AuthStatus = () => {
    if (status === "loading")
       return <Skeleton width="6rem" height="30px"/>
 
-
    // if unauthenticated
    if (status === "unauthenticated")
       return (
@@ -93,7 +92,6 @@ const AuthStatus = () => {
             </Link>
          </Text>
       )
-
 
    //else
    return (
