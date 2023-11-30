@@ -66,6 +66,7 @@ const NavBar = () => {
                                  radius="full"
                                  variant="solid"
                                  className="cursor-pointer"
+                                 referrerPolicy="no-referrer" //if avatar don't load. bit flaky. check "next.config.js"
                                  />
                            </Text>
                         </DropdownMenu.Trigger>
