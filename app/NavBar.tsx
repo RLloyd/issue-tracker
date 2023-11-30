@@ -1,12 +1,12 @@
 'use client';
 
+import { CaretDownIcon } from "@radix-ui/react-icons";
+import { Avatar, Box, Button, Container, DropdownMenu, Flex, Text } from "@radix-ui/themes";
+import classnames from 'classnames';
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 import { SiPivotaltracker } from "react-icons/si";
-import classnames from 'classnames';
-import { Box, Card, Container, Flex, Grid, Theme } from "@radix-ui/themes";
-import { useSession } from "next-auth/react";
 
 const NavBar = () => {
    const currentPath = usePathname();
@@ -46,35 +46,49 @@ const NavBar = () => {
                   </ul>
 
                </Flex>
+
                {/* Login & Logout button: add dynamically */}
-               <Flex align="center">
-                  {status === "authenticated" && ( <Link href="api/auth/signout">Log Out</Link>)}
-                  {status === "unauthenticated" && ( <Link href="api/auth/signin">LogIn</Link>)}
-                  {/* this will give Error: [next-auth]: `useSession` must be wrapped in a <SessionProvider /> */}
-               </Flex>
+
+               {/* <Flex align="center"> */}
+               <Box>
+                  {status === "authenticated" && (
+                     <DropdownMenu.Root>
+                        <DropdownMenu.Trigger>
+                           {/* <Button variant="soft">
+                              Options
+                              <CaretDownIcon />
+                           </Button> */}
+                           <Text>
+                              <Avatar
+                                 src={session.user!.image!}
+                                 fallback="GD"
+                                 size="3"
+                                 radius="full"
+                                 variant="solid"
+                                 className="cursor-pointer"
+                                 />
+                           </Text>
+                        </DropdownMenu.Trigger>
+
+                        <DropdownMenu.Content>
+                           <DropdownMenu.Label>
+                              <Text size="4">
+                                 {session.user!.email}
+                              </Text>
+                           </DropdownMenu.Label>
+
+                           <DropdownMenu.Item>
+                              <Link href="/api/auth/signout">Log Out</Link>
+                           </DropdownMenu.Item>
+                        </DropdownMenu.Content>
+
+                     </DropdownMenu.Root>
+                  )}
+                  {status === "unauthenticated" && ( <Link href="/api/auth/signin">LogIn</Link>)}
+               </Box>
             </Flex>
          </Container>
 		</nav>
-
-      // Original version
-      // {/* <nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center bg-fuchsia-50"> */}
-		// <nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center">
-      //    {/* Logo */}
-      //    <Link href="/"><SiPivotaltracker className="w-8 h-8" /></Link>
-      //    {/* Menu List */}
-		// 	<ul className="flex space-x-6">
-      //       { links.map(link =>
-      //          <Link key={link.href}
-      //             className={ classnames({
-      //                'text-red-900' : link.href === currentPath,
-      //                'text-zinc-500' : link.href !== currentPath,
-      //                'hover:text-zinc-800 transition-color' : true
-      //             })}
-      //             href={link.href}> {link.label} </Link> )}
-      //          {/* <Link key={id} className="styles" href={link} */}
-		// 	</ul>
-		// </nav>
-	);
-};
-
+   )
+}
 export default NavBar;
