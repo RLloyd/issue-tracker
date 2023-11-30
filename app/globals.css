@@ -26,13 +26,20 @@ body {
     rgb(var(--background-start-rgb)); */
 }
 
+/* Custom Tailwind CSS */
+@layer utilities {
+   .nav-link {
+      @apply text-cyan-600 hover:text-violet-500 transition-colors
+   }
+}
+
 /* Custom styles */
 .gdBtn-styl-1 {
    border: 0px solid green;/* !important; */
 }
 
 .gd-test {
-   border: 1px solid green;
+   border: 1px solid magenta;
 }
 
 .gd-brdr-lt-grey {
@@ -41,4 +48,8 @@ body {
 
 .gd-brdr-red {
    border-color: rgb(250, 11, 11) !important;
+}
+
+.gd-avatar-border {
+   border: 2px solid rgb(151, 154, 154);
 }
