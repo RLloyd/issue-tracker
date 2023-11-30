@@ -1,8 +1,10 @@
 'use client';
 
+import { Skeleton } from "@/app/components";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { Avatar, Box, Button, Container, DropdownMenu, Flex, Text } from "@radix-ui/themes";
 import classnames from 'classnames';
+import delay from "delay";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -70,7 +72,9 @@ const AuthStatus = () => {
    const {status, data: session } = useSession();
 
    // if null
-   if (status === "loading") return null;
+   if (status === "loading")
+      return <Skeleton width="6rem" height="30px"/>
+
 
    // if unauthenticated
    if (status === "unauthenticated")
