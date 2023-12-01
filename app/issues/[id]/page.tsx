@@ -10,6 +10,7 @@ import IssueFormSkeleton from './loading';
 import DeleteIssueButton from './DeleteIssueButton';
 import { getServerSession } from 'next-auth';
 import authOptions from '@/app/auth/authOptions';
+import AssigneeSelect from './AssigneeSelect';
 
 
 const IssueForm = dynamic(
@@ -41,7 +42,7 @@ const IssueDetailPage = async ( { params }: { params: { id: string } } ) => {
    return (
       <>
          <Heading as='h1' color='teal'>Issue Details</Heading>
-         <Grid columns={{initial:"1", sm:"4"}} gap="5" className='gd-test gd-brdr-red'>
+         <Grid columns={{initial:"1", sm:"4"}} gap="5" className='gd-testX gd-brdr-red'>
 
             {/* Column1: Content */}
             <Box className="md:col-span-3">
@@ -51,9 +52,10 @@ const IssueDetailPage = async ( { params }: { params: { id: string } } ) => {
             {/* if session is truthy show buttons else hide */}
             { session && (
                // {/* Column2: Buttons(Edit & Delete) */}
-               <Box display='block' className='gd-test gd-brdr-lt-grey'>
+               <Box display='block' className='gd-testX gd-brdr-lt-grey'>
                   {/* <Flex direction="column" gap="4"> */}
                   <Flex direction="column" gap="4">
+                     <AssigneeSelect />
                      <EditIssueButton issueId={issue.id} />
                      <DeleteIssueButton issueId={issue.id} />
                   </Flex>
