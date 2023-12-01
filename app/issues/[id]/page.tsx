@@ -1,5 +1,5 @@
 import prisma from '@/prisma/client';
-import { Box, Flex, Grid, Heading } from '@radix-ui/themes';
+import { Box, Flex, Grid, Heading, Text } from '@radix-ui/themes';
 
 import delay from 'delay';
 import { notFound } from 'next/navigation';
@@ -8,6 +8,8 @@ import IssueDetails from './IssueDetails';
 import dynamic from 'next/dynamic';
 import IssueFormSkeleton from './loading';
 import DeleteIssueButton from './DeleteIssueButton';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/app/auth/authOptions';
 
 
 const IssueForm = dynamic(
@@ -24,6 +26,8 @@ interface Props {
 
 // const IssueDetailPage = async ({ params }: Props) => {
 const IssueDetailPage = async ( { params }: { params: { id: string } } ) => {
+   const session = await getServerSession(authOptions);
+
    const issue = await prisma.issue.findUnique({
       where: {id: parseInt(params.id)}
    });
@@ -44,14 +48,23 @@ const IssueDetailPage = async ( { params }: { params: { id: string } } ) => {
                <IssueDetails issue={issue} />
             </Box>
 
-            {/* Column2: Buttons(Edit & Delete) */}
-            <Box display='block' className='gd-test gd-brdr-lt-grey'>
-               {/* <Flex direction="column" gap="4"> */}
-               <Flex direction="column" gap="4">
-                  <EditIssueButton issueId={issue.id} />
-                  <DeleteIssueButton issueId={issue.id} />
-               </Flex>
-            </Box>
+            {/* if session is truthy show buttons else hide */}
+            { session && (
+               // {/* Column2: Buttons(Edit & Delete) */}
+               <Box display='block' className='gd-test gd-brdr-lt-grey'>
+                  {/* <Flex direction="column" gap="4"> */}
+                  <Flex direction="column" gap="4">
+                     <EditIssueButton issueId={issue.id} />
+                     <DeleteIssueButton issueId={issue.id} />
+                  </Flex>
+               </Box>
+            )}
+
+            { !session && (
+               <Text>You must be loggedin to edit</Text>
+            )}
+
+
 
          </Grid>
       </>

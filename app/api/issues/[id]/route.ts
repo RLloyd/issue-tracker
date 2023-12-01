@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { Issue } from '@prisma/client';
 import prisma from "@/prisma/client";
 import delay from "delay";
+import authOptions from "@/app/auth/authOptions";
+import { getServerSession } from "next-auth";
 
 interface Props {
    params: { params: { id: string }}
@@ -12,6 +14,9 @@ interface Props {
 export async function PATCH(
    request: NextRequest,
    { params }: { params: { id: string }}) { //Props is a concept tie so much with with React. We'll use an inline annotations
+      const session = await getServerSession(authOptions);
+      if(!session)
+         return NextResponse.json({}, {status: 401});
 
    const body = await request.json(); //to read the body of the request
 
@@ -51,6 +56,9 @@ export async function PATCH(
 export async function DELETE(
    request: NextRequest,
    { params }: { params: { id: string }}) {
+   const session = await getServerSession(authOptions);
+   if(!session)
+      return NextResponse.json({}, {status: 401});
 
    delay(2000); //for testing
 
