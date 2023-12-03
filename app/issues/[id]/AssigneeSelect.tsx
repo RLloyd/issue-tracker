@@ -15,14 +15,17 @@ const AssigneeSelect = () => {
       staleTime: 60 * 1000, //useQuery re-fetch timer
       retry: 3 // useQuery retry fetching 3 times
    });
-   if(isLoading) {
-      return (
-         <Skeleton />
-      )
-   };
-   //if(isLoading) return <Skeleton /> //single line
 
-   if(error) return null;
+   { isLoading ? <Skeleton /> : null }; //same as below
+
+   // if(isLoading) {
+   //    return (
+   //       <Skeleton />
+   //    )
+   // };
+   // //if(isLoading) return <Skeleton /> //single line
+
+   // if(error) return null;
 
    // useQuery will replace the ff:
    // const [users, setUsers] = useState<User[]>([]); //type of our users, Prisma User
