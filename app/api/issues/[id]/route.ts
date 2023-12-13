@@ -1,4 +1,4 @@
-import { issueSchema } from "@/app/validationSchemas";
+import { patchIssueSchema } from "@/app/validationSchemas";
 import { NextRequest, NextResponse } from "next/server";
 import { Issue } from '@prisma/client';
 import prisma from "@/prisma/client";
@@ -13,35 +13,47 @@ interface Props {
 // export async function PATCH(request: NextRequest, { params: {params} }: Props){ //using the Props interface
 export async function PATCH(
    request: NextRequest,
-   { params }: { params: { id: string }}) { //Props is a concept tie so much with with React. We'll use an inline annotations
-      const session = await getServerSession(authOptions);
-      if(!session)
-         return NextResponse.json({}, {status: 401});
+   { params }: { params: { id: string }}) { // Props is a concept tied so much with with React. We'll use an inline annotations
+
+   const session = await getServerSession(authOptions);
+   if(!session) return NextResponse.json({}, {status: 401});
 
    const body = await request.json(); //to read the body of the request
 
-   //validate the body using the "validationSchemas.ts" with the name "createIssueSchema" which we'll re-name to "issueSchema" to be more generic
-   const validation = issueSchema.safeParse(body);
+   // Validate the body using the "validationSchemas.ts" with the name "createIssueSchema" which we'll re-name to "issueSchema" to be more generic
+   // Replace "issueSchema" with the new "patchIssueSchema" for the validation with optional property
+   const validation = patchIssueSchema.safeParse(body);
+   console.log("validation: ", validation);
 
    //validation un-successfull
    if(!validation.success)
       return NextResponse.json(validation.error.format(), { status: 400 });
 
+   const {assignedToUserId, title, description} = body; // destructured to avoid writing body.assignedToUserId | body.title | body.description
+
+   if (assignedToUserId) {
+      const user = await prisma.user.findUnique({ where: { id: assignedToUserId }})
+      if (!user)
+         return NextResponse.json({ error: "Invalid user."}, {status: 400})
+   }
+
    //otherwise
    const issue = await prisma.issue.findUnique({
       where: { id: parseInt(params.id) }
    });
+   console.log("issue: ", issue);
 
    //if there's no issue
    if(!issue)
       return NextResponse.json({ error: 'Invalid issue'}, { status: 404 }); //not found error
 
-   //otherwise update the title & description
+   // otherwise update the title & description & the new assignedToUserId property //
    const updatedIssue = await prisma.issue.update({
       where: { id: issue.id },
       data: {
-         title: body.title,
-         description: body.description
+         title,
+         description,
+         assignedToUserId
       }
    })
 
