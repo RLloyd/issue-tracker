@@ -34,9 +34,24 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "iss
    //    fetchUsers();
    // }, [])
 
+   const showToastSuccessMessage = () => {
+      toast.success("Success Issue Assigned!", {
+         duration: 4000,
+         // icon: '👏',
+         iconTheme: {
+            primary: 'red',
+            secondary: 'white',
+            // background: 'red'
+         },
+      })
+    };
+
    const assignIssue = (userId: string) => {
       axios
-         .patch(`/api/issues/${issue.id}`, { assignedToUserId: userId === 'null' ? null : userId })
+         .patch(`/api/issues/${issue.id}`, {
+            assignedToUserId: userId === 'null' ? null : userId
+          })
+         .then(showToastSuccessMessage)
          .catch(() => {
             toast.error("Changes could not be saved.", {
                duration: 4000,
@@ -50,7 +65,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "iss
          });
    }
 
-  return (
+   return (
       <>
          <Select.Root
             defaultValue = {issue.assignedToUserId || "null"}
@@ -79,6 +94,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "iss
                success: {
                   style: {
                      background: 'green',
+                     color: 'white'
                   },
                },
                error: {
@@ -89,7 +105,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "iss
             }}
          />
       </>
-  )
+   )
 }
 
 // Custom hook
