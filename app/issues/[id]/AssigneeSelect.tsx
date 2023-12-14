@@ -5,7 +5,9 @@ import { Issue, User } from '@prisma/client';
 import { Select } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+// import React, { useEffect, useState } from 'react'
+// import toast, { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from "react-hot-toast";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "issue"
    // using tanStack reactQuery useQuery hook
@@ -38,35 +40,59 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "iss
    // }, [])
 
   return (
-    <Select.Root
-    // defaultValue = {issue.assignedToUserId || ""}
-      defaultValue = {issue.assignedToUserId || "null"}
-      onValueChange = {(userId) => {
-         // axios.patch('/api/issues/' + issue.id, { assignedToUserId: userId ||  null })
-         axios.patch(`/api/issues/${issue.id}`, { assignedToUserId: userId === 'null' ? null : userId });
-      }}>
-      <Select.Trigger placeholder='Assign...' />
-      <Select.Content>
-         {/* Group 1 */}
-         <Select.Group>
-            <Select.Label>Suggestions</Select.Label>
-            {/* <Select.Item value="">Unassigned</Select.Item> */}
-            <Select.Item value="null">Unassigned</Select.Item>
-            {users?.map((user) => ( //use optional chaining 'coz initially 'users' is undefined until data is fetched from the backend
-               <Select.Item key={user.id} value={user.id}>{user.name}</Select.Item>
-            ))}
-            {/* <Select.Item value='2'>Odee Gonzales</Select.Item>
-            <Select.Item value='3'>John Gonzales</Select.Item> */}
-         </Select.Group>
-         {/* Group 2 */}
-         {/* <Select.Group>
-            <Select.Label>Group 2 Selections</Select.Label>
-            <Select.Item value='g2a'>Rolando Gonzales</Select.Item>
-            <Select.Item value='g2b'>Odee Gonzales</Select.Item>
-            <Select.Item value='g2c'>John Gonzales</Select.Item>
-         </Select.Group> */}
-      </Select.Content>
-    </Select.Root>
+      <>
+         <Select.Root
+            defaultValue = {issue.assignedToUserId || "null"}
+            onValueChange = {(userId) => {
+               axios
+                  .patch(`/xapi/issues/${issue.id}`, { assignedToUserId: userId === 'null' ? null : userId })
+                  .catch(() => {
+                     // toast.success('Successfully created!')
+                     toast.error("Changes could not be saved.", {
+                        duration: 4000,
+                        // icon: '👏',
+                        iconTheme: {
+                           primary: 'red',
+                           secondary: 'white',
+                           // background: 'red'
+                         },
+                     })
+                  });
+         }}>
+         <Select.Trigger placeholder='Assign...' />
+         <Select.Content>
+            <Select.Group>
+               <Select.Label>Suggestions</Select.Label>
+               <Select.Item value="null">Unassigned</Select.Item>
+               {users?.map((user) => ( //use optional chaining 'coz initially 'users' is undefined until data is fetched from the backend
+                  <Select.Item key={user.id} value={user.id}>{user.name}</Select.Item>
+               ))}
+            </Select.Group>
+         </Select.Content>
+         </Select.Root>
+
+         {/* Pop-up message */}
+            <Toaster
+               containerStyle={{
+                  top: 100,
+                  // left: 20,
+                  // bottom: 20,
+                  // right: 20,
+               }}
+               toastOptions={{
+                  success: {
+                     style: {
+                        background: 'green',
+                     },
+                  },
+                  error: {
+                     style: {
+                        background: 'yellow',
+                     },
+                  },
+               }}
+            />
+      </>
   )
 }
 
