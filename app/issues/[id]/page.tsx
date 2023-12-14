@@ -55,7 +55,7 @@ const IssueDetailPage = async ( { params }: { params: { id: string } } ) => {
                <Box display='block' className='gd-testX gd-brdr-lt-grey'>
                   {/* <Flex direction="column" gap="4"> */}
                   <Flex direction="column" gap="4">
-                     <AssigneeSelect />
+                     <AssigneeSelect issue={issue}/>
                      <EditIssueButton issueId={issue.id} />
                      <DeleteIssueButton issueId={issue.id} />
                   </Flex>
