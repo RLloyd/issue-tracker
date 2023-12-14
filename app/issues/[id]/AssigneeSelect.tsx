@@ -11,12 +11,7 @@ import { Toaster, toast } from "react-hot-toast";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "issue"
    // using tanStack reactQuery useQuery hook
-   const { data: users, error, isLoading } = useQuery<User[]>({
-      queryKey: ['users'],
-      queryFn: () => axios.get('/api/users').then(res => res.data), //this return a Promise that resolved to data
-      staleTime: 60 * 1000, //useQuery re-fetch timer
-      retry: 3 // useQuery retry fetching 3 times
-   });
+   const { data: users, error, isLoading } = useUsers();
 
    { isLoading ? <Skeleton /> : null }; //same as below
 
@@ -39,26 +34,27 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "iss
    //    fetchUsers();
    // }, [])
 
+   const assignIssue = (userId: string) => {
+      axios
+         .patch(`/api/issues/${issue.id}`, { assignedToUserId: userId === 'null' ? null : userId })
+         .catch(() => {
+            toast.error("Changes could not be saved.", {
+               duration: 4000,
+               // icon: '👏',
+               iconTheme: {
+                  primary: 'red',
+                  secondary: 'white',
+                  // background: 'red'
+               },
+            })
+         });
+   }
+
   return (
       <>
          <Select.Root
             defaultValue = {issue.assignedToUserId || "null"}
-            onValueChange = {(userId) => {
-               axios
-                  .patch(`/xapi/issues/${issue.id}`, { assignedToUserId: userId === 'null' ? null : userId })
-                  .catch(() => {
-                     // toast.success('Successfully created!')
-                     toast.error("Changes could not be saved.", {
-                        duration: 4000,
-                        // icon: '👏',
-                        iconTheme: {
-                           primary: 'red',
-                           secondary: 'white',
-                           // background: 'red'
-                         },
-                     })
-                  });
-         }}>
+            onValueChange = {assignIssue}>
          <Select.Trigger placeholder='Assign...' />
          <Select.Content>
             <Select.Group>
@@ -72,28 +68,37 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "iss
          </Select.Root>
 
          {/* Pop-up message */}
-            <Toaster
-               containerStyle={{
-                  top: 100,
-                  // left: 20,
-                  // bottom: 20,
-                  // right: 20,
-               }}
-               toastOptions={{
-                  success: {
-                     style: {
-                        background: 'green',
-                     },
+         <Toaster
+            containerStyle={{
+               top: 100,
+               // left: 20,
+               // bottom: 20,
+               // right: 20,
+            }}
+            toastOptions={{
+               success: {
+                  style: {
+                     background: 'green',
                   },
-                  error: {
-                     style: {
-                        background: 'yellow',
-                     },
+               },
+               error: {
+                  style: {
+                     background: 'yellow',
                   },
-               }}
-            />
+               },
+            }}
+         />
       </>
   )
 }
+
+// Custom hook
+const useUsers = () =>
+   useQuery<User[]>({
+      queryKey: ['users'],
+      queryFn: () => axios.get('/api/users').then(res => res.data), //this return a Promise that resolved to data
+      staleTime: 60 * 1000, //useQuery re-fetch timer
+      retry: 3 // useQuery retry fetching 3 times
+   });
 
 export default AssigneeSelect
