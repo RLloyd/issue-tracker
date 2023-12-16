@@ -72,6 +72,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => { //? destructuring "iss
             onValueChange = {assignIssue}>
          <Select.Trigger placeholder='Assign...' />
          <Select.Content>
+            {/* Drop down selection */}
             <Select.Group>
                <Select.Label>Suggestions</Select.Label>
                <Select.Item value="null">Unassigned</Select.Item>
